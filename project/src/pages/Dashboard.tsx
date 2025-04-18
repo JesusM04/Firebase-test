@@ -47,21 +47,8 @@ const Dashboard: React.FC = () => {
         setMensaje('');
         setErrorCarga(null);
 
-        const cargarActividadesIniciales = async () => {
-            try {
-                console.log('🔍 Intentando cargar actividades para:', currentUser.uid);
-                const actividadesData = await obtenerActividades(currentUser.uid);
-                console.log('✅ Actividades cargadas exitosamente:', actividadesData.length);
-                setActividades(actividadesData);
-            } catch (error) {
-                console.error('❌ Error en carga inicial:', error);
-                setErrorCarga('No se pudieron cargar las actividades. Por favor, verifica tu conexión e intenta de nuevo.');
-            } finally {
-                setCargando(false);
-            }
-        };
-
         let unsubscribe: () => void;
+
         try {
             console.log('🔄 Configurando suscripción en tiempo real para:', currentUser.uid);
             unsubscribe = suscribirseAActividades(
@@ -83,8 +70,6 @@ const Dashboard: React.FC = () => {
             setErrorCarga('Error al configurar las actualizaciones en tiempo real.');
             setCargando(false);
         }
-
-        cargarActividadesIniciales();
 
         return () => {
             if (unsubscribe) {
@@ -130,7 +115,7 @@ const Dashboard: React.FC = () => {
                 }
             }
 
-            const nuevaActividad = await guardarActividad(
+            await guardarActividad(
                 nuevaActividadTexto,
                 currentUser.uid,
                 {
@@ -141,7 +126,6 @@ const Dashboard: React.FC = () => {
                 }
             );
             
-            setActividades(prev => [nuevaActividad, ...prev]);
             setMensaje('✅ Actividad guardada.');
             setNuevaActividadTexto('');
             setComentario('');
