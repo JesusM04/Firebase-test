@@ -22,6 +22,27 @@ const firebaseConfig = {
   appId: "1:799437345963:web:834530c339bfae56a853ee"
 };
 
+
+// 
+
+// // Ejemplo en un proyecto Next.js
+// import { initializeApp } from 'firebase/app';
+// import { getAuth } from 'firebase/auth';
+
+// const firebaseConfig = {
+//   apikey: process.env.VITE
+//   apiKey: process.env.VITE_FIREBASE_API_KEY,
+//   authDomain: process.env.VITE_FIREBASE_AUTH_DOMAIN,
+//   projectId: process.env.VITE_FIREBASE_PROJECT_ID,
+//   storageBucket: process.env.VITE_FIREBASE_STORAGE_BUCKET,
+//   messagingSenderId: process.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+//   appId: process.env.VITE_FIREBASE_APP_ID,
+//   measurementId: process.env.VITE_FIREBASE_MEASUREMENT_ID,
+// };
+
+
+
+
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
@@ -44,7 +65,7 @@ export const loginWithEmailAndPassword = async (
 };
 
 // Logout
-export const logoutUser = async (): Promise<void> => {
+export const signOutUser = async (): Promise<void> => {
   return signOut(auth);
 };
 

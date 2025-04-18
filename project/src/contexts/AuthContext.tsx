@@ -1,13 +1,18 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { User } from 'firebase/auth';
-import { onAuthChanged } from '../services/firebase';
+import { onAuthChanged, signOutUser } from '../services/firebase';
 
 interface AuthContextType {
   currentUser: User | null;
   loading: boolean;
+  signOut: () => Promise<void>;
 }
 
-const AuthContext = createContext<AuthContextType>({ currentUser: null, loading: true });
+const AuthContext = createContext<AuthContextType>({ 
+  currentUser: null, 
+  loading: true,
+  signOut: async () => {}
+});
 
 export const useAuth = () => useContext(AuthContext);
 
@@ -28,8 +33,18 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     return unsubscribe; // Cleanup subscription on unmount
   }, []);
 
+  const signOut = async () => {
+    try {
+      await signOutUser();
+      setCurrentUser(null);
+    } catch (error) {
+      console.error('Error al cerrar sesión:', error);
+      throw error;
+    }
+  };
+
   return (
-    <AuthContext.Provider value={{ currentUser, loading }}>
+    <AuthContext.Provider value={{ currentUser, loading, signOut }}>
       {!loading && children}
     </AuthContext.Provider>
   );

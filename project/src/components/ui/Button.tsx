@@ -1,7 +1,7 @@
 import React, { ButtonHTMLAttributes } from 'react';
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'primary' | 'secondary' | 'google';
+  variant?: 'primary' | 'primary-dark' | 'secondary' | 'secondary-dark' | 'google';
   fullWidth?: boolean;
   isLoading?: boolean;
 }
@@ -18,9 +18,11 @@ const Button: React.FC<ButtonProps> = ({
   const baseClasses = 'py-2 px-4 rounded-md font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 flex items-center justify-center';
   
   const variantClasses = {
-    primary: 'bg-indigo-600 hover:bg-indigo-700 text-white focus:ring-indigo-500',
-    secondary: 'bg-white hover:bg-gray-100 text-gray-800 border border-gray-300 focus:ring-indigo-500',
-    google: 'bg-white hover:bg-gray-100 text-gray-800 border border-gray-300 focus:ring-red-500'
+    'primary': 'bg-indigo-600 hover:bg-indigo-700 text-white focus:ring-indigo-500',
+    'primary-dark': 'bg-indigo-500 hover:bg-indigo-600 text-white focus:ring-indigo-400',
+    'secondary': 'bg-white hover:bg-gray-100 text-gray-800 border border-gray-300 focus:ring-indigo-500',
+    'secondary-dark': 'bg-gray-700 hover:bg-gray-600 text-gray-100 border border-gray-600 focus:ring-gray-400',
+    'google': 'bg-white hover:bg-gray-100 text-gray-800 border border-gray-300 focus:ring-red-500'
   };
 
   const widthClass = fullWidth ? 'w-full' : '';
